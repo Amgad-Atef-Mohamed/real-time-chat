@@ -290,13 +290,13 @@ var genericPort = 2020;
      }
      var message = '<li class="'+direction+' clearfix">';
          message +='<span class="chat-img pull-'+direction+'">';
-          message +='<img src="'+text.avatarPath+'" alt="User Avatar">';
+          message +='<img src="'+text['user'].avatarPath+'" alt="User Avatar">';
         message +='</span>'
         message +='<div class="chat-body clearfix">';
           message +='<div class="header">';
-             message +='<strong class="primary-font">'+text.first_name+'</strong>';
+             message +='<strong class="primary-font">'+text['user'].first_name+'</strong>';
              message +='<small class="pull-right text-muted">';
-             message +='<i class="fa fa-clock-o" style="margin-right: 5px;"></i>'+sent_from+'</small>';
+             message +='<i class="fa fa-clock-o" style="margin-right: 5px;"></i>'+text.created_at+'</small>';
           message +='</div>';
           message +='<p>';
            message +=text.message_body;
@@ -416,7 +416,7 @@ console.log(text);
   function displayThread(sender_id) {
        console.log(sender_id);
       $('#messages').html("");
-      var myid = getCookie('user_id');
+      var myid = 2;
       $.ajax({
           method: "POST",
           url: serverAddress+"/singleThread",
@@ -425,9 +425,7 @@ console.log(text);
           for (var i = 0; i < msg.length; i++) {
               var direction = 'left';
               var member = '';
-              if(msg[i].sender_id==myid){
-                  direction = 'right';
-              }
+              if(msg[i].sender_id == myid) direction = 'right';
               var member = messageElement(msg[i],direction);
               $('#messages').append(member);
           }
@@ -458,21 +456,23 @@ console.log(text);
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
-//  function loadMyMessages(userid,recid){
-//    var myid = getCookie('user_id');
-//    $.ajax({
-//      method: "POST",
-//      url: serverAddress+"/mymessages",
-//      data: { user_id: myid }
-//    }).done(function( msg ) {
-//
-//        for (var i = 0; i < msg.length; i++) {
-//          var member = membersElemet(msg[i]);
-//          $('#member_area').append(member);
-//        }
-//
-//    });
-//  }
+
+  function loadMyMessages( userid, recid){
+    var myid = 2;
+    $.ajax({
+      method: "POST",
+      url: serverAddress+"/mymessages",
+      data: { user_id: myid }
+    }).done(function( msg ) {
+
+        for (var i = 0; i < msg.length; i++) {
+          var member = membersElemet(msg[i]);
+          $('#member_area').append(member);
+        }
+
+    });
+  }
+
   function newMessage(receiver_id){
     console.log('asdf');
     var socket = io('http://127.0.0.1:7000');
