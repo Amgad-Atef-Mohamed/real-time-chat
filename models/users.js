@@ -1,5 +1,5 @@
 "use strict";
-
+var md5 = require('md5');
 module.exports = function(sequelize, DataTypes) {
   var users = sequelize.define("users", {
     id: {
@@ -19,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
     password : {
         type:DataTypes.STRING,
         allowNull: false,
+        set(val) {
+            this.setDataValue('password', md5(val));
+        }
     },
     remember_token :{
         type:DataTypes.STRING,
