@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <!-- 
+      The codes are free, but we require linking to our web site.
+      Why to Link?
+      A true story: one girl didn't set a link and had no decent date for two years, and another guy set a link and got a top ranking in Google! 
+      Where to Put the Link?
+      home, about, credits... or in a good page that you want
+      THANK YOU MY FRIEND!
+    -->
+    <title>chat room - Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="style.css" rel="stylesheet"> -->
+<style type="text/css">
+      <style type="text/css">
+      body {
+        padding-top: 0;
+        font-size: 12px;
+        color: #777;
+        background: #f9f9f9;
+        font-family: 'Open Sans',sans-serif;
+        margin-top:20px;
+      }
+
+      .bg-white {
+        background-color: #fff;
+      }
+
+      .friend-list {
+        list-style: none;
+        margin-left: -40px;
+        border: 1px dodgerblue;
+      }
+
+      .friend-list li {
+        border-bottom: 1px solid #eee;
+      }
+
+      .friend-list li a img {
+        float: left;
+        width: 45px;
+        height: 45px;
+        margin-right: 10px;
+      }
+
+       .friend-list li a {
+        position: relative;
+        display: block;
+        padding: 10px;
+        transition: all .2s ease;
+        -webkit-transition: all .2s ease;
+        -moz-transition: all .2s ease;
+        -ms-transition: all .2s ease;
+        -o-transition: all .2s ease;
+      }
+
+      .friend-list li.active a {
+        background-color: #f1f5fc;
+      }
+
+      .friend-list li a .friend-name, 
+      .friend-list li a .friend-name:hover {
+        color: #777;
+      }
+
+      .friend-list li a .last-message {
+        width: 65%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .friend-list li a .time {
+        position: absolute;
+        top: 10px;
+        right: 8px;
+      }
+
+      small, .small {
+        font-size: 85%;
+      }
+
+      .friend-list li a .chat-alert {
+        position: absolute;
+        right: 8px;
+        top: 27px;
+        font-size: 10px;
+        padding: 3px 5px;
+      }
+
+      .chat-message {
+        padding: 60px 20px 115px;
+      }
+
+      .chat {
+          list-style: none;
+          margin: 0;
+      }
+
+      .chat-message{
+          background: #f9f9f9;  
+      }
+
+      .chat li img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50em;
+        -moz-border-radius: 50em;
+        -webkit-border-radius: 50em;
+      }
+
+      img {
+        max-width: 100%;
+      }
+
+      .chat-body {
+        padding-bottom: 20px;
+      }
+
+      .chat li.left .chat-body {
+        margin-left: 70px;
+        background-color: #fff;
+      }
+
+      .chat li .chat-body {
+        position: relative;
+        font-size: 11px;
+        padding: 10px;
+        border: 1px solid #f1f5fc;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+      }
+
+      .chat li .chat-body .header {
+        padding-bottom: 5px;
+        border-bottom: 1px solid #f1f5fc;
+      }
+
+      .chat li .chat-body p {
+        margin: 0;
+      }
+
+      .chat li.left .chat-body:before {
+        position: absolute;
+        top: 10px;
+        left: -8px;
+        display: inline-block;
+        background: #fff;
+        width: 16px;
+        height: 16px;
+        border-top: 1px solid #f1f5fc;
+        border-left: 1px solid #f1f5fc;
+        content: '';
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+      }
+
+      .chat li.right .chat-body:before {
+        position: absolute;
+        top: 10px;
+        right: -8px;
+        display: inline-block;
+        background: #fff;
+        width: 16px;
+        height: 16px;
+        border-top: 1px solid #f1f5fc;
+        border-right: 1px solid #f1f5fc;
+        content: '';
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+      }
+
+      .chat li {
+        margin: 15px 0;
+      }
+
+      .chat li.right .chat-body {
+        margin-right: 70px;
+        background-color: #fff;
+      }
+
+      .chat-box {
+        position: fixed;
+        bottom: 0;
+        left: 444px;
+        right: 0;
+        padding: 15px;
+        border-top: 1px solid #eee;
+        transition: all .5s ease;
+        -webkit-transition: all .5s ease;
+        -moz-transition: all .5s ease;
+        -ms-transition: all .5s ease;
+        -o-transition: all .5s ease;
+      }
+
+      .primary-font {
+        color: #3c8dbc;
+      }
+
+      a:hover, a:active, a:focus {
+        text-decoration: none;
+        outline: 0;
+      }
+</style>
+</head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io('http://chat.epsilonsocial.com');
+    var genericPort = 2020;
+    var domain = "http://178.62.29.5";
+    // var images_root_path = "http://content.epsilonsocial.com/cmp";
+    var images_root_path = "http://178.62.29.5";
+    var serverAddress = 'http://chat.epsilonsocial.com';
+  </script>
+<body onload="loadMyMessages();" id="body_id">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container bootstrap snippet">
+    <div class="row">
+    <div class="col-md-4 bg-white ">
+            <div class=" row border-bottom padding-sm" style="height: 40px;">
+              Messages
+            </div>
+            
+            <!-- =============================================================== -->
+            <!-- member list -->
+           <!--  <a href="#" onclick="newMessage('147');" >
+            <i style="float: right;margin-top: -15px;margin-right: 5px;" class="fa fa-plus-square" aria-
+            hidden="true"></i>
+            </a> -->
+            <ul class="friend-list" id="member_area">
+               <li id="oneMem'+user.id+'" onclick="displayThread('+user.id+')">
+                <a href="#" class="clearfix">
+                   <img src="https://www.personalimage.co.nz/images/img4.jpg" alt="" class="img-circle">
+                   <div class="friend-name">
+                      <strong>amgad atef</strong>
+                       </div>
+                    <div class="last-message text-muted">last message</div>
+                    <small class="time text-muted">amgad</small>
+                    <small class="chat-alert label label-danger">1</small>
+                    </a>
+               </li>
+            </ul>
+    </div>
+        
+        <!--=========================================================-->
+        <!-- selected chat -->
+      <div class="col-md-8 bg-white ">
+            <div class="chat-message">
+                <ul class="chat" id="messages" style="height: 900px;overflow-y: scroll;">
+
+                </ul>
+            </div>
+            <div class="chat-box bg-white">
+              <div class="input-group">
+                <input style="display: none;" class="form-control border no-shadow no-rounded" id="m" placeholder="Type your message here">
+
+                <span class="input-group-btn">
+                
+                  <button style="display: none;" id="sub" class="btn btn-success no-rounded" type="button">Send</button>
+                </span>
+              </div><!-- /input-group --> 
+            </div>            
+    </div>        
+  </div>
+</div>
+
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+var active_rooms = [] ;
+var genericPort = 2020;
+  function messageElement(text,direction){
+     var sent_from = 'Just now';
+     if(text.created_at!='Just now'){
+        var sent_from = text.created_at.split('T');
+        sent_from = sent_from[1].split('.');
+        sent_from = sent_from[0].split(':');
+        sent_from = sent_from[0]+':'+sent_from[1];
+     }
+     var message = '<li class="'+direction+' clearfix">';
+         message +='<span class="chat-img pull-'+direction+'">';
+          message +='<img src="'+images_root_path+text.avatarPath+'" alt="User Avatar">';
+        message +='</span>'
+        message +='<div class="chat-body clearfix">';
+          message +='<div class="header">';
+             message +='<strong class="primary-font">'+text.first_name+'</strong>';
+             message +='<small class="pull-right text-muted">';
+             message +='<i class="fa fa-clock-o" style="margin-right: 5px;"></i>'+sent_from+'</small>';
+          message +='</div>';
+          message +='<p>';
+           message +=text.message_body;
+          message +='</p>';
+        message +='</div>';
+        message +='</li>';
+      return message ;
+  }
+  function membersElemet(text){
+console.log(text);
+    var sent_from = text.created_at.split('T');
+    sent_from = sent_from[1].split('.');
+    sent_from = sent_from[0].split(':');
+    myid = getCookie('user_id');
+    console.log(myid);
+    var active_class = '';
+    if(text.viewed=='0'){active_class = 'active';}
+    // in case that user send a new message and didn't get a reply he will be the sender id here
+    // so we need to assign the div to the receiver id 
+    var display_thread_id = text.sender_id;
+    if(text.sender_id==myid){
+      display_thread_id = text.receiver_id;
+      console.log('zzzzzzzzzzzzzzzzz');
+        $.ajax({
+        method: "GET",
+        url: "http://178.62.29.5:8081/api/get_user_by_id",
+        data: { user_id: text.receiver_id }
+        }).done(function( msg ) {
+          console.log(JSON.parse(msg));
+        user = JSON.parse(msg);
+        var member = '<li id="oneMem'+user.id+'" onclick="displayThread('+user.id+')">';
+           member += '<a href="#" class="clearfix">';
+             member += '<img src="'+images_root_path+user.avatarPath+'" alt="" class="img-circle">';
+             member += '<div class="friend-name"> ';
+               member += '<strong>'+user.first_name+'</strong>';
+             member += '</div>';
+             member += '<div class="last-message text-muted">'+text.message_body+'</div>';
+             member += '<small class="time text-muted">'+sent_from[0]+':'+sent_from[1]+'</small>';
+             // member += '<small class="chat-alert label label-danger">1</small>';
+           member += '</a>';
+         member += '</li>';
+          $('#member_area').append(member);
+         
+         // console.log(member);
+         // return member;
+    });
+  }
+    else{
+    // if(active_rooms.indexOf(text.conversation_id)<0 && text.sender_id!=myid){
+    //   active_rooms.push(text.conversation_id);
+      var member = '<li id="oneMem'+text.sender_id+'" onclick="displayThread('+display_thread_id+')">';
+         member += '<a href="#" class="clearfix">';
+           member += '<img src="'+images_root_path+text.avatarPath+'" alt="" class="img-circle">';
+           member += '<div class="friend-name"> ';
+             member += '<strong>'+text.first_name+'</strong>';
+           member += '</div>';
+           member += '<div class="last-message text-muted">'+text.message_body+'</div>';
+           member += '<small class="time text-muted">'+sent_from[0]+':'+sent_from[1]+'</small>';
+           // member += '<small class="chat-alert label label-danger">1</small>';
+         member += '</a>';
+       member += '</li>';
+      
+      return member ;
+    }
+  }
+    // var myid = Math.floor(Math.random() * (10 - 0) + 0);
+  var myid = getCookie('user_id');
+  // setCookie('user',1,14);
+  var lastActiveClass = '';
+
+  var socket = io('http://chat.epsilonsocial.com');
+  var activeRoom = 'empty';
+  var activeReceiver = '';
+  function initiateSockets(room,receiver_id){
+    console.log('Room : '+room);
+
+    activeRoom = room;
+    activeReceiver = receiver_id;
+    socket.emit('room',activeRoom);
+
+    socket.on(activeRoom, function(msg){
+        var direction = 'left';
+        if(msg.sender_id==myid){direction ='right';}
+        var added_message = messageElement(msg,direction);
+        $('#messages').append(added_message);
+    });
+  }
+    $("input").keypress(function(event) {
+      if (event.which == 13) {
+      var myid = getCookie('user_id');
+      var text = $('#m').val();
+      var message = {room:activeRoom, body:text,sender_id:myid,receiver_id:activeReceiver};
+      console.log(activeRoom);
+      console.log(message);
+      socket.emit('message',message);
+      $('#m').val('');
+
+
+      var objDiv = document.getElementById("body_id");
+      objDiv.scrollTop = objDiv.scrollHeight;
+
+      var objDiv = document.getElementById("messages");
+      objDiv.scrollTop = objDiv.scrollHeight;
+      }
+    });
+
+
+
+  function generateMessageUniqueIdentifier(){
+       var text = "";
+       var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+       for( var i=0; i < 6; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+  }
+  function displayThread(sender_id) {
+      // console.log(sender_id);
+        $('#messages').html("");
+        var myid = getCookie('user_id');
+        $.ajax({
+        method: "POST",
+        url: serverAddress+"/singleThread",
+        data: { sender_id: sender_id , 'user_id':myid }
+        }).done(function( msg ) {
+            for (var i = 0; i < msg.length; i++) {
+              var direction = 'left';
+              var member = '';
+              if(msg[i].sender_id==myid){
+                 direction = 'right';
+              }
+              var member = messageElement(msg[i],direction);
+              $('#messages').append(member);
+            }
+            var conv = generateMessageUniqueIdentifier();
+            if(msg.length > 0){
+              conv = msg[0].conversation_id;
+            }
+            var receiver_id = sender_id ;
+            console.log(receiver_id);
+            // $('#sub').css('display','block');
+            $('#m').css('width','900px');
+            $('#m').css('display','block');
+            if(lastActiveClass ==''){
+            $( "#oneMem"+sender_id ).addClass( "active" );
+              lastActiveClass = "oneMem"+sender_id;
+            }
+            else{
+              $( "#oneMem"+sender_id ).addClass( "active" );
+              $( "#"+lastActiveClass ).removeClass( "active" );
+              lastActiveClass =  "oneMem"+sender_id;
+            }
+            initiateSockets(conv,receiver_id);
+        });
+  }
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  function loadMyMessages(userid,recid){
+    var myid = getCookie('user_id');
+    $.ajax({
+      method: "POST",
+      url: serverAddress+"/mymessages",
+      data: { user_id: myid }
+    }).done(function( msg ) {
+        
+        for (var i = 0; i < msg.length; i++) {
+          var member = membersElemet(msg[i]);
+          $('#member_area').append(member);
+        }
+
+    });
+  }
+  function newMessage(receiver_id){
+    console.log('asdf');
+    var socket = io('http://chat.epsilonsocial.com');
+    var room = 'room_'+receiver_id;
+    socket.emit('room',room);
+    var message = {body:'hello',room:room};
+    socket.emit('notify',message);
+  }
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+  }
+  </script>
+</body>
+</html>
