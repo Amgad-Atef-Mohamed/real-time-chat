@@ -1,4 +1,5 @@
 "user strict";
+
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -6,9 +7,9 @@ var routesConfig = require('./routes/index');
 var open = require("open")
 , server = require('http').createServer(app)
 , io = require("socket.io")(server)
-, uuid = require('node-uuid')
-,model = require('./models/index')
-,expressJade = require('express-jade');
+,model = require('./models/index');
+var jwt    = require('jsonwebtoken');
+var appSeckertKey = require('./config/appConfig').secret;
 
 const PORT = process.env.port || 7000;
 const URL = '127.0.0.1';
@@ -18,11 +19,11 @@ app.use(express.static(__dirname+'/public/images'));
 app.use(bodyParser.urlencoded({ extend: false}));
 app.use(bodyParser());
 app.set('view engine', 'ejs');
+
+
+
+
 routesConfig(app);
-
-var jwt    = require('jsonwebtoken');
-var appSeckertKey = require('./config/appconfig').secret;
-
 
 io.use((socket, next) => {
     let token = socket.handshake.query.token;

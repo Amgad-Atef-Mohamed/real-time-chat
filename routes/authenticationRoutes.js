@@ -2,7 +2,7 @@
 var express = require('express');
 var authenticationRouter = express.Router();
 var jwt    = require('jsonwebtoken');
-var appSeckertKey = require('../config/appconfig').secret;
+var appSeckertKey = require('../config/appConfig').secret;
 var models = require('../models/index');
 var md5 = require('md5');
 

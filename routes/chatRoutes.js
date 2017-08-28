@@ -2,9 +2,8 @@
 var express = require('express');
 var chatRouter = express.Router();
 var jwt    = require('jsonwebtoken');
-var appSeckertKey = require('../config/appconfig').secret;
+var appSeckertKey = require('../config/appConfig').secret;
 var model = require('../models/index');
-var md5 = require('md5');
 
 chatRouter.use(function(req, res, next) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
