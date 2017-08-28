@@ -38,20 +38,33 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: DataTypes.NOW
     },
     avatarPath : DataTypes.TEXT ,
-  }
+    isActive: DataTypes.BOOLEAN,
+    socketID: {
+        type:DataTypes.STRING(255),
+        defaultValue:null,
+        allowNull:true
+    }
+
+      }
   ,
   {
     timestamps: false,
-      freezeTableName:true
+    freezeTableName:true,
+    tableName: 'users'
   }
   , {
     classMethods: {
       associate: function(models) {
-        // users.hasMany(models.messages, {foreignKey: 'receiver_id', sourceKey:'id' , as:'userM'});
-        users.hasMany(models.messages, {foreignKey: 'sender_id' , sourceKey:'id', as:'userM'});
       }
     }
   });
-
+    users.associate = function(models) {
+        users.hasMany(models.messages, {
+            onDelete: "CASCADE",
+            foreignKey:'sender_id',
+            targetKey: 'id',
+            as: 'userMessages'
+        });
+    };
   return users;
 };

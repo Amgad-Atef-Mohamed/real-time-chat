@@ -12,8 +12,8 @@ authenticationRouter.post('/login', function (req, res) {
             if (!user)
                 return  res.status(401).json({ success: false, message: 'Authentication failed. User not found.' });
 
-            jwt.sign({'first_name':user.first_name,'email': user.email,'avatar_path': user.avatar_path},
-                 appSeckertKey, {expiresIn: 60 * 60}, (err, token) =>{
+            jwt.sign({'user_id': user.id,'first_name':user.first_name,'email': user.email,'avatar_path': user.avatar_path},
+                 appSeckertKey, {expiresIn: 60 * 60* 60*24}, (err, token) =>{
                      if (err)
                          console.log(err);
                      return  res.status(200).json({ success: true,'userToken': token });

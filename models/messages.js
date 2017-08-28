@@ -49,15 +49,20 @@ module.exports = function(sequelize, DataTypes) {
   {
     timestamps: false,
     freezeTableName:true,
+      tableName: 'messages'
   }, {
     classMethods: {
       associate: function(models) {
-        // messages.belongsTo(models.users, {foreignKey: 'receiver_id', as:'userM'});
-        messages.belongsTo(models.users, {foreignKey: 'sender_id' ,'targetKey':'id' , as:'userM'});
-
       }
     }
   });
-
+    messages.associate = function(models) {
+        messages.belongsTo(models.users, {
+            onDelete: "CASCADE",
+            foreignKey:  'sender_id',
+            targetKey: 'id',
+            as :'user'
+        });
+    };
   return messages;
 };

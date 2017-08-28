@@ -64,7 +64,7 @@
           data: $('form').serializeArray()
       }).done(function( msg ) {
             if(msg.success){
-                window.location= "http://127.0.0.1:7000/api?token="+msg.userToken+"";
+                window.location= "http://127.0.0.1:7000/chat?token="+msg.userToken+"";
             }
       }).fail(function (error) {
           console.log(error.responseText);

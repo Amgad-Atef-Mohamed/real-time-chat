@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Real Time chat using sockets.io",
   "main": "server.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node server.js"
+  },
   "author": "amgad atef mohamed",
   "license": "ISC",
   "dependencies": {
